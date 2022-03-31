@@ -1,0 +1,306 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Frame xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       CornerRadius="25"
+       Padding="20,40,20,10"
+       HeightRequest="130"
+       x:Name="homeCell"
+       BorderColor="{StaticResource appcolor_i3}"
+       x:Class="GoEng.Cells.HomeCell">
+
+    <Frame.Triggers>
+        
+        <DataTrigger TargetType="Frame"
+                     Binding="{Binding IsPassed}"
+                     Value="True">
+
+            <Setter Property="BorderColor"
+                    Value="{StaticResource appcolor_i6}"/>
+
+        </DataTrigger>
+
+        <DataTrigger TargetType="Frame"
+                     Binding="{Binding IsBlocked}"
+                     Value="True">
+
+            <Setter Property="BorderColor"
+                    Value="{StaticResource appcolor_i2}"/>
+
+        </DataTrigger>
+
+    </Frame.Triggers>
+    
+    <Grid RowDefinitions="Auto, *">
+
+        <StackLayout>
+
+            <Label Text="{Binding Name}"
+               HorizontalTextAlignment="Center"
+               TextColor="{StaticResource appcolor_i3}"
+               FontAttributes="Bold"
+               FontSize="{StaticResource tsize_i2}"
+               HorizontalOptions="Center">
+
+                <Label.Triggers>
+
+                    <DataTrigger TargetType="Label"
+                             Binding="{Binding IsPassed}"
+                             Value="True">
+
+                        <Setter Property="TextColor"
+                            Value="{StaticResource appcolor_i6}"/>
+
+                    </DataTrigger>
+
+                    <DataTrigger TargetType="Label"
+                             Binding="{Binding IsBlocked}"
+                             Value="True">
+
+                        <Setter Property="TextColor"
+                            Value="{StaticResource appcolor_i6}"/>
+
+                    </DataTrigger>
+
+                    <DataTrigger TargetType="Label"
+                             Binding="{Binding IsTest}"
+                             Value="True">
+
+                        <Setter Property="TextColor"
+                            Value="{StaticResource appcolor_i3}"/>
+
+                    </DataTrigger>
+                </Label.Triggers>
+
+            </Label>
+
+            <Grid ColumnDefinitions="*, *, *"
+              Padding="10">
+
+                <Image Source="star_blue">
+                    
+                    <Image.Triggers>
+                        
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding IsBlocked}"
+                                     Value="True">
+
+                            <Setter Property="Source"
+                                    Value="star_gray"/>
+
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding IsPassed}"
+                                     Value="True">
+
+                            <Setter Property="Source"
+                                    Value="star_gray"/>
+
+                        </DataTrigger>
+                        
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding Star}"
+                                     Value="1">
+
+                            <Setter Property="Source"
+                                    Value="star_gold"/>
+
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding Star}"
+                                     Value="2">
+
+                            <Setter Property="Source"
+                                    Value="star_gold"/>
+
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding Star}"
+                                     Value="3">
+
+                            <Setter Property="Source"
+                                    Value="star_gold"/>
+
+                        </DataTrigger>
+                        
+                    </Image.Triggers>
+                    
+                </Image>
+                
+                <Image Source="star_blue"
+                       Grid.Column="1">
+                    
+                    <Image.Triggers>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding IsBlocked}"
+                                     Value="True">
+
+                            <Setter Property="Source"
+                                    Value="star_gray"/>
+
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding IsPassed}"
+                                     Value="True">
+
+                            <Setter Property="Source"
+                                    Value="star_gray"/>
+
+                        </DataTrigger>
+                        
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding IsBlocked}"
+                                     Value="True">
+
+                            <Setter Property="Source"
+                                    Value="star_gray"/>
+
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding Star}"
+                                     Value="2">
+
+                            <Setter Property="Source"
+                                    Value="star_gold"/>
+
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding Star}"
+                                     Value="3">
+
+                            <Setter Property="Source"
+                                    Value="star_gold"/>
+
+                        </DataTrigger>
+                        
+                    </Image.Triggers>
+                    
+                </Image>
+
+                <Image Source="star_blue"
+                       Grid.Column="2">
+
+                    <Image.Triggers>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding IsBlocked}"
+                                     Value="True">
+
+                            <Setter Property="Source"
+                                    Value="star_gray"/>
+
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding IsPassed}"
+                                     Value="True">
+
+                            <Setter Property="Source"
+                                    Value="star_gray"/>
+
+                        </DataTrigger>
+                        
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding IsBlocked}"
+                                     Value="True">
+
+                            <Setter Property="Source"
+                                    Value="star_gray"/>
+
+                        </DataTrigger>
+
+                        <DataTrigger TargetType="Image"
+                                     Binding="{Binding Star}"
+                                     Value="3">
+
+                            <Setter Property="Source"
+                                    Value="star_gold"/>
+
+                        </DataTrigger>
+
+                    </Image.Triggers>
+
+                </Image>
+            </Grid>
+
+        </StackLayout>
+
+        <Button BorderColor="{StaticResource appcolor_i3}"
+                BorderWidth="1"
+                Grid.Row="1"
+                IsVisible="False"
+                Command="{Binding TapCommand, Source={x:Reference homeCell}}"
+                CommandParameter="{Binding }"
+                TextColor="{StaticResource appcolor_i3}"
+                CornerRadius="30"
+                FontAttributes="Bold"
+                Text="Սկսել"
+                BackgroundColor="Transparent">
+
+            <Button.Triggers>
+
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding IsPassed}"
+                             Value="True">
+
+                    <Setter Property="BorderColor"
+                            Value="{StaticResource appcolor_i6}"/>
+
+                    <Setter Property="Text"
+                            Value="Կրկնել"/>
+
+                    <Setter Property="TextColor"
+                            Value="{StaticResource appcolor_i6}"/>
+
+                </DataTrigger>
+
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding IsBlocked}"
+                             Value="False">
+
+                    <Setter Property="IsVisible"
+                            Value="True"/>
+
+                </DataTrigger>
+
+            </Button.Triggers>
+
+        </Button>
+
+        <StackLayout IsVisible="False"
+                     Grid.Row="1"
+                     Orientation="Horizontal">
+
+            <StackLayout.Triggers>
+
+                <DataTrigger TargetType="StackLayout"
+                             Binding="{Binding IsBlocked}"
+                             Value="True">
+
+                    <Setter Property="IsVisible"
+                            Value="True"/>
+
+                </DataTrigger>
+
+            </StackLayout.Triggers>
+
+            <BoxView BackgroundColor="{StaticResource appcolor_i6}"
+                     HeightRequest="10"
+                     CornerRadius="10"
+                     VerticalOptions="Center"
+                     HorizontalOptions="FillAndExpand"/>
+
+            <Image Source="block"
+                   VerticalOptions="Center"/>
+
+        </StackLayout>
+
+    </Grid>
+    
+</Frame>

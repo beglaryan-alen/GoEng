@@ -1,0 +1,69 @@
+﻿<?xm version="1.0" encoding="utf-8" ?>
+<Frame
+    x:Class="GoEng.Controls.CustomEntry"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="customEntry"
+    Padding="10,0"
+    BackgroundColor="Transparent"
+    BorderColor="{StaticResource appcolor_i4}"
+    CornerRadius="30"
+    HeightRequest="60"
+    HorizontalOptions="Center"
+    WidthRequest="240">
+
+    <Grid ColumnDefinitions="*, Auto">
+
+        <Entry
+            IsPassword="{Binding IsPassword, Source={x:Reference customEntry}}"
+            Text="{Binding Text, Source={x:Reference customEntry}}"
+            TextColor="{Binding TextColor, Source={x:Reference customEntry}}"
+            Placeholder="{Binding PlaceHolder, Source={x:Reference customEntry}}"
+            FontSize="{StaticResource tsize_i2}"
+            Visual="Material">
+
+            <Entry.Triggers>
+
+                <DataTrigger
+                    Binding="{Binding IsNumeric, Source={x:Reference customEntry}}"
+                    TargetType="Entry"
+                    Value="True">
+
+                    <Setter Property="Keyboard" Value="Numeric" />
+                    
+                </DataTrigger>
+
+            </Entry.Triggers>
+
+        </Entry>
+
+        <Image
+            Grid.Column="1"
+            IsVisible="{Binding IsRightIconVisible, Source={x:Reference customEntry}}"
+            Source="show">
+
+            <Image.Triggers>
+
+                <DataTrigger
+                    Binding="{Binding IsPassword, Source={x:Reference customEntry}}"
+                    TargetType="Image"
+                    Value="True">
+
+                    <Setter Property="Source" Value="Hide" />
+
+                </DataTrigger>
+
+            </Image.Triggers>
+
+            <Image.GestureRecognizers>
+
+                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+
+            </Image.GestureRecognizers>
+
+        </Image>
+
+    </Grid>
+
+
+</Frame>

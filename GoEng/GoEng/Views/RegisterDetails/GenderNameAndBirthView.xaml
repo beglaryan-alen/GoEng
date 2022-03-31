@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage
+    x:Class="GoEng.Views.RegisterDetails.GenderNameAndBirthView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:GoEng.Controls"
+    xmlns:views="clr-namespace:GoEng.Views">
+
+    <Grid Padding="20" RowDefinitions="Auto, *">
+
+        <Image HorizontalOptions="Start" Source="icon" />
+
+        <StackLayout
+            Grid.Row="1"
+            HorizontalOptions="Center"
+            Spacing="20"
+            VerticalOptions="Center">
+
+            <StackLayout
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                Spacing="20">
+
+                <Image BackgroundColor="Transparent" Source="girl">
+
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Gender}"
+                            TargetType="Image"
+                            Value="Female">
+
+                            <Setter Property="Source" Value="girl_stroke" />
+
+                        </DataTrigger>
+                    </Image.Triggers>
+
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GirlCommand}" />
+                    </Image.GestureRecognizers>
+
+                </Image>
+
+                <Image BackgroundColor="Transparent" Source="boy">
+
+                    <Image.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Gender}"
+                            TargetType="Image"
+                            Value="Male">
+
+                            <Setter Property="Source" Value="boy_stroke" />
+
+                        </DataTrigger>
+                    </Image.Triggers>
+
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BoyCommand}" />
+                    </Image.GestureRecognizers>
+
+                </Image>
+
+            </StackLayout>
+
+            <controls:CustomEntry
+                PlaceHolder="Իմ անունը"
+                Text="{Binding Name}" />
+
+            <DatePicker Date="{Binding BirthDate}"/>
+
+            <Button
+                BackgroundColor="{StaticResource appcolor_i2}"
+                CornerRadius="20"
+                IsEnabled="False"
+                Text="Առաջ"
+                TextColor="{StaticResource appcolor_i6}">
+
+                <Button.Triggers>
+                    <DataTrigger
+                        Binding="{Binding CanContinue}"
+                        TargetType="Button"
+                        Value="true">
+                        <Setter Property="BackgroundColor" Value="{StaticResource appcolor_i4}" />
+                        <Setter Property="TextColor" Value="{StaticResource appcolor_i3}" />
+                        <Setter Property="Command" Value="{Binding NextCommand}" />
+                    </DataTrigger>
+                </Button.Triggers>
+
+            </Button>
+
+        </StackLayout>
+
+    </Grid>
+
+</views:BaseContentPage>

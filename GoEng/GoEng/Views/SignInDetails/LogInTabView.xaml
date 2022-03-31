@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="GoEng.Views.SignInDetails.LogInTabView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:GoEng.Controls"
+    xmlns:views="clr-namespace:GoEng.Views">
+
+    <StackLayout HorizontalOptions="Center"
+                 Spacing="20"
+                 VerticalOptions="Start">
+
+        <controls:CustomEntry 
+                              PlaceHolder="Մուտքանուն" 
+                              Text="{Binding Email}"/>
+
+        <controls:CustomEntry
+                              IsPassword="True"
+                              IsRightIconVisible="True"
+                              Text="{Binding Password}"
+                              PlaceHolder="Գաղտնաբառ" />
+
+        <StackLayout Orientation="Horizontal">
+
+            <CheckBox Color="{StaticResource appcolor_i4}"
+                      IsChecked="{Binding Remember}"/>
+
+            <Label FontSize="{StaticResource tsize_i3}"
+                   HorizontalOptions="Center"
+                   Text="Հիշել ինձ"
+                   TextColor="{StaticResource appcolor_i3}"
+                   VerticalOptions="Center" />
+
+        </StackLayout>
+
+        <Label FontSize="{StaticResource tsize_i2}"
+               HorizontalOptions="Center"
+               Text="Մոռացել եմ գաղտնաբառը"
+               TextColor="{StaticResource appcolor_i3}" />
+
+        <Button Grid.Row="1"
+                BackgroundColor="{StaticResource appcolor_i4}"
+                Command="{Binding LoginCommand}"
+                CornerRadius="30"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Text="Մուտք"
+                TextColor="{StaticResource appcolor_i3}"
+                WidthRequest="240" />
+
+    </StackLayout>
+
+</ContentView>

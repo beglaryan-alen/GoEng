@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<StackLayout
+    x:Class="GoEng.Controls.SignInIndicatorView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="signInIndicatorView"
+    Orientation="Horizontal"
+    Spacing="30">
+    <StackLayout>
+        <StackLayout.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+        </StackLayout.GestureRecognizers>
+        <Label
+            FontSize="{StaticResource tsize_i2}"
+            Text="Գրանցում"
+            TextColor="{StaticResource appcolor_i2}">
+            <Label.Triggers>
+                <DataTrigger
+                    Binding="{Binding SelectedIndex, Source={x:Reference signInIndicatorView}}"
+                    TargetType="Label"
+                    Value="0">
+                    <Setter Property="TextColor" Value="{StaticResource appcolor_i3}" />
+                </DataTrigger>
+            </Label.Triggers>
+
+        </Label>
+
+        <BoxView
+            BackgroundColor="{StaticResource appcolor_i4}"
+            HeightRequest="2"
+            HorizontalOptions="Center"
+            IsVisible="False"
+            WidthRequest="50">
+            <BoxView.Triggers>
+                <DataTrigger
+                    Binding="{Binding SelectedIndex, Source={x:Reference signInIndicatorView}}"
+                    TargetType="BoxView"
+                    Value="0">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </BoxView.Triggers>
+        </BoxView>
+
+    </StackLayout>
+
+    <StackLayout>
+
+        <StackLayout.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" />
+        </StackLayout.GestureRecognizers>
+
+        <Label
+            FontSize="{StaticResource tsize_i2}"
+            Text="Մուտք"
+            TextColor="{StaticResource appcolor_i2}">
+            <Label.Triggers>
+                <DataTrigger
+                    Binding="{Binding SelectedIndex, Source={x:Reference signInIndicatorView}}"
+                    TargetType="Label"
+                    Value="1">
+                    <Setter Property="TextColor" Value="{StaticResource appcolor_i3}" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+
+        <BoxView
+            BackgroundColor="{StaticResource appcolor_i4}"
+            HeightRequest="2"
+            HorizontalOptions="Center"
+            IsVisible="False"
+            WidthRequest="30">
+            <BoxView.Triggers>
+                <DataTrigger
+                    Binding="{Binding SelectedIndex, Source={x:Reference signInIndicatorView}}"
+                    TargetType="BoxView"
+                    Value="1">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </BoxView.Triggers>
+        </BoxView>
+
+    </StackLayout>
+
+
+</StackLayout>

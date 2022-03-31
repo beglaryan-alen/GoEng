@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage
+    x:Class="GoEng.Views.WelcomeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:GoEng.Views"
+    BackgroundColor="{StaticResource appcolor_i1}">
+
+    <Grid Padding="20" RowDefinitions="Auto, *">
+
+        <Image HorizontalOptions="Start" Source="icon" />
+
+        <Grid Grid.Row="1" RowDefinitions="0.6*, 0.3*, 0.1*, Auto">
+
+            <Image
+                Grid.Row="0"
+                Aspect="AspectFit"
+                Source="welcome" />
+
+            <StackLayout Grid.Row="1" Spacing="20">
+
+                <Label
+                    FontSize="{StaticResource tsize_i2}"
+                    HorizontalOptions="Center"
+                    Text="Սովորում ենք անգլերեն"
+                    TextColor="{StaticResource appcolor_i3}"
+                    VerticalOptions="Center" />
+
+                <Button
+                    BackgroundColor="{StaticResource appcolor_i1}"
+                    BorderColor="{StaticResource appcolor_i4}"
+                    BorderWidth="1"
+                    Command="{Binding RegisterCommand}"
+                    CornerRadius="30"
+                    FontAttributes="Bold"
+                    FontSize="{StaticResource tsize_i3}"
+                    HeightRequest="50"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Գրանցվել"
+                    TextColor="{StaticResource appcolor_i3}"
+                    WidthRequest="240" />
+
+                <Button
+                    BackgroundColor="{StaticResource appcolor_i4}"
+                    Command="{Binding LoginCommand}"
+                    CornerRadius="30"
+                    FontAttributes="Bold"
+                    FontSize="{StaticResource tsize_i3}"
+                    HeightRequest="50"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="Մուտք"
+                    TextColor="{StaticResource appcolor_i3}"
+                    WidthRequest="240" />
+
+            </StackLayout>
+
+        </Grid>
+
+    </Grid>
+
+</views:BaseContentPage>

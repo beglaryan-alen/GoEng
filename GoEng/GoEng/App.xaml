@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<unity:PrismApplication
+    x:Class="GoEng.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:styles="clr-namespace:GoEng.Resources.Styles"
+    xmlns:unity="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms">
+
+    <unity:PrismApplication.Resources>
+
+        <styles:DefaultResources>
+
+            <styles:DefaultResources.MergedDictionaries>
+
+                <styles:DefaultResources />
+
+            </styles:DefaultResources.MergedDictionaries>
+
+        </styles:DefaultResources>
+
+    </unity:PrismApplication.Resources>
+
+</unity:PrismApplication>

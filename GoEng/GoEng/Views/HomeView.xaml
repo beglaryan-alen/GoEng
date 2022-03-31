@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="clr-namespace:GoEng.Views"
+                       xmlns:cells="clr-namespace:GoEng.Cells"
+                       x:Name="homeView"
+                       BackgroundColor="{StaticResource appcolor_i1}"
+                       x:Class="GoEng.Views.HomeView">
+
+    <Grid Padding="20" RowDefinitions="Auto, *">
+
+        <Image
+            Grid.Row="0"
+            HorizontalOptions="Start"
+            Source="icon" />
+        
+        <ScrollView Grid.Row="1"
+                    Orientation="Vertical"
+                    VerticalScrollBarVisibility="Never">
+
+            <FlexLayout BindableLayout.ItemsSource="{Binding Collection}"
+                        Wrap="Wrap"
+                        JustifyContent="SpaceBetween">
+
+                <BindableLayout.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <Grid Padding="10"
+                              FlexLayout.Basis="{OnIdiom Phone='50%', Tablet='33%'}">
+
+                            <cells:HomeCell TapCommand="{Binding Source={x:Reference homeView}, Path=BindingContext.TapCommand}"/>
+
+                        </Grid>
+
+                    </DataTemplate>
+
+                </BindableLayout.ItemTemplate>
+
+            </FlexLayout>
+
+        </ScrollView>
+        
+    </Grid>
+
+</views:BaseContentPage>

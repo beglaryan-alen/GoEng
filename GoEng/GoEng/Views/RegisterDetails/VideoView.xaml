@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="clr-namespace:GoEng.Views"
+                       x:Class="GoEng.Views.RegisterDetails.VideoView">
+
+    <Grid Padding="20" RowDefinitions="Auto, *">
+
+        <Image HorizontalOptions="Start" Source="icon" />
+
+        <StackLayout
+            Grid.Row="1"
+            Spacing="20"
+            VerticalOptions="Center">
+
+            <BoxView BackgroundColor="Black"
+                     HeightRequest="200"/>
+
+            <Button BackgroundColor="{StaticResource appcolor_i4}"
+                    TextColor="{StaticResource appcolor_i3}"
+                    Margin="20"
+                    Command="{Binding NextCommand}"
+                    Text="Առաջ"
+                    CornerRadius="30"
+                    FontSize="{StaticResource tsize_i2}"/>
+
+        </StackLayout>
+
+    </Grid>
+
+</views:BaseContentPage>

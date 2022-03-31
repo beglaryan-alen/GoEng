@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="GoEng.Views.SignInDetails.RegisterTabView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:GoEng.Controls">
+
+    <StackLayout
+        Padding="20"
+        HorizontalOptions="Center"
+        Spacing="25">
+
+        <controls:CustomEntry
+            PlaceHolder="Էլ․ հասցե"
+            Text="{Binding EmailText}" />
+
+        <controls:CustomEntry
+            IsPassword="True"
+            IsRightIconVisible="True"
+            PlaceHolder="Գաղտնաբառ"
+            Text="{Binding Password}" />
+
+        <controls:CustomEntry 
+                              IsPassword="True"
+                              PlaceHolder="Կրկնել գաղտնաբառը"
+                              Text="{Binding ConfirmPassword}" />
+
+        <Label Text="{Binding ErrorMessage}"
+               FontSize="{StaticResource tsize_i3}"
+               HorizontalTextAlignment="Center"
+               HorizontalOptions="Center"
+               TextColor="Red"/>
+
+        <Frame BackgroundColor="Transparent"
+               Padding="15, 10"
+               BorderColor="{StaticResource appcolor_i2}"
+               CornerRadius="20">
+            
+            <StackLayout Orientation="Horizontal">
+
+                <Image Source="google"/>
+
+                <Label Text="Գրանցվել Google-ի միջոցով"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       FontSize="{StaticResource tsize_i3}"
+                       TextColor="{StaticResource appcolor_i6}"/>
+            </StackLayout>
+        
+        </Frame>
+
+        <Button BackgroundColor="{StaticResource appcolor_i2}"
+                CornerRadius="30"
+                HorizontalOptions="Center"
+                WidthRequest="240"
+                FontAttributes="Bold"
+                IsEnabled="False"
+                Text="Գրանցվել"
+                FontSize="{StaticResource tsize_i2}"
+                TextColor="{StaticResource appcolor_i6}">
+            <Button.Triggers>
+                
+                <DataTrigger
+                    Binding="{Binding CanContinue}"
+                    TargetType="Button"
+                    Value="true">
+                    
+                    <Setter Property="BackgroundColor" Value="{StaticResource appcolor_i4}" />
+
+                    <Setter Property="TextColor" Value="{StaticResource appcolor_i3}" />
+
+                    <Setter Property="Command" Value="{Binding RegisterCommand}" />
+
+                    <Setter Property="IsEnabled" Value="True" />
+                    
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+
+    </StackLayout>
+
+</ContentView>

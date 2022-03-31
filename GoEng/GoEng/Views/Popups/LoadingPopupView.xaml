@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:views="http://rotorgames.com"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                 CloseWhenBackgroundIsClicked="False"
+                 x:Class="GoEng.Views.Popups.LoadingPopupView">
+
+    <pages:PopupPage.Animation>
+
+        <animations:ScaleAnimation PositionIn="Center"
+                                   ScaleIn="1.2"
+                                   ScaleOut="0.8"
+                                   DurationIn="400"
+                                   DurationOut="300"
+                                   EasingIn="SinOut"
+                                   EasingOut="SinIn"/>
+    </pages:PopupPage.Animation>
+
+    <Frame HorizontalOptions="Center"
+           BackgroundColor="{StaticResource appcolor_i1}"
+           VerticalOptions="Center">
+
+        <StackLayout>
+
+            <ff:CachedImage Source="loadingGif"
+                            />
+
+            <Label Text="{Binding LoadingText}"
+                   TextColor="{StaticResource appcolor_i3}"
+                   FontSize="{StaticResource tsize_i2}"/>
+
+        </StackLayout>
+
+    </Frame>
+    
+    
+    
+</views:PopupPage>

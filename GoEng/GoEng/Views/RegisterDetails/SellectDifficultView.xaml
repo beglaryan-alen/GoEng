@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:view="clr-namespace:GoEng.Views"
+                      x:Class="GoEng.Views.RegisterDetails.SellectDifficultView">
+
+    <Grid Padding="20" 
+          RowDefinitions="Auto, *">
+
+        <Image HorizontalOptions="Start" 
+               Source="icon" />
+
+        <StackLayout Grid.Row="1"
+                     Spacing="20"
+                     Padding="30"
+                     VerticalOptions="Center">
+
+            <Label FontSize="{StaticResource tsize_i2}"
+                   HorizontalOptions="Center"
+                   Text="Ընտրեք կարգավիճակը"
+                   TextColor="{StaticResource appcolor_i3}" />
+
+            <Button CornerRadius="30"
+                    BackgroundColor="{StaticResource appcolor_i3}"
+                    Text="Պարզ"
+                    Command="{Binding ButtonCommand}"
+                    FontSize="{StaticResource tsize_i2}"
+                    FontAttributes="Bold"
+                    CommandParameter="Easy"
+                    TextColor="{StaticResource appcolor_i1}"/>
+
+            <Button CornerRadius="30"
+                    BackgroundColor="{StaticResource appcolor_i4}"
+                    Text="Միջին"
+                    Command="{Binding ButtonCommand}"
+                    CommandParameter="Medium"
+                    FontSize="{StaticResource tsize_i2}"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource appcolor_i3}"/>
+
+            <Button CornerRadius="30"
+                    CommandParameter="Hard"
+                    FontAttributes="Bold"
+                    Command="{Binding ButtonCommand}"
+                    FontSize="{StaticResource tsize_i2}"
+                    BackgroundColor="{StaticResource appcolor_i5}"
+                    Text="Բարդ"
+                    TextColor="{StaticResource appcolor_i1}"/>
+
+        </StackLayout>
+
+    </Grid>
+
+</view:BaseContentPage>
