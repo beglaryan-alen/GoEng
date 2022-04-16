@@ -1,6 +1,9 @@
-﻿using GoEng.Services.Auth;
+﻿using GoEng.Services.AccountService;
+using GoEng.Services.Auth;
 using GoEng.Services.Cache;
-using GoEng.Services.Home;
+using GoEng.Services.Default;
+using GoEng.Services.DefaultRepository;
+using GoEng.Services.Game;
 using GoEng.Services.Mapper;
 using GoEng.Settings;
 using GoEng.ViewModels;
@@ -14,7 +17,6 @@ using Prism;
 using Prism.Ioc;
 using Prism.Plugin.Popups;
 using Prism.Unity;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GoEng
@@ -24,28 +26,24 @@ namespace GoEng
         public static T Resolve<T>() => Current.Container.Resolve<T>();
         public App(IPlatformInitializer platformInitializer) : base(platformInitializer) { }
 
-        protected async override void OnInitialized()
+        protected override void OnInitialized()
         {
             InitializeComponent();
 
             Barrel.ApplicationId = AppSettings.AppName;
 
-            await SetStartPage();
+            SetStartPage();
 
         }
 
-        private async Task SetStartPage()
+        private async void SetStartPage()
         {
-            IAuth auth = Resolve<IAuth>();
-            var res = await auth.SignInSilent();
-            if (res)
-            {
+            IAccountService accountService = Resolve<IAccountService>();
+            var res = await accountService.LoginSilentAsync();
+            if (res.IsSuccessful)
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(HomeView)}");
-            }
             else
-            {
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(WelcomeView)}");
-            }
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -54,10 +52,12 @@ namespace GoEng
             containerRegistry.RegisterPopupNavigationService();
 
             //services
-            containerRegistry.RegisterScoped<IMapperService, MapperService>();
-            containerRegistry.RegisterScoped<ICacheService, CacheService>();
-            containerRegistry.RegisterScoped<IHomeService, HomeService>();
-            containerRegistry.RegisterScoped<IAuth, Auth>();
+            containerRegistry.Register<IMapperService, MapperService>();
+            containerRegistry.Register<ICacheService, CacheService>();
+            containerRegistry.Register<IDefaultRepository, DefaultRepository>();
+            containerRegistry.Register<IAccountService, AccountService>();
+            containerRegistry.RegisterInstance<IAuth>(DependencyService.Get<IAuth>());
+            containerRegistry.RegisterInstance<IGame>(DependencyService.Get<IGame>());
 
             //navigations
             containerRegistry.RegisterForNavigation<NavigationPage>(nameof(NavigationPage));

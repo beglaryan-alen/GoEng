@@ -26,6 +26,7 @@
         <StackLayout>
 
             <ff:CachedImage Source="loadingGif"
+                            HeightRequest="50"
                             />
 
             <Label Text="{Binding LoadingText}"

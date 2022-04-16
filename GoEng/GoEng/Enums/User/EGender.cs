@@ -1,4 +1,4 @@
-﻿namespace GoEng.Enums
+﻿namespace GoEng.Enums.User
 {
     public enum EGender
     {

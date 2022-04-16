@@ -2,6 +2,7 @@
 {
     public class CacheSettings
     {
-        public const string UserUid = "userUId";
+        public const string Email = "email";
+        public const string Password = "password";
     }
 }

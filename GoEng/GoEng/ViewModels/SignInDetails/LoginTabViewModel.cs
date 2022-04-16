@@ -1,4 +1,4 @@
-﻿using GoEng.Services.Auth;
+﻿using GoEng.Services.AccountService;
 using GoEng.Settings;
 using GoEng.Views;
 using MvvmHelpers.Commands;
@@ -11,13 +11,13 @@ namespace GoEng.ViewModels.SignInDetails
 {
     public class LoginTabViewModel : SignInDetailTabViewModel
     {
-        private readonly IAuth _auth;
+        private readonly IAccountService _accountService;
         public LoginTabViewModel(
             INavigationService navigationService,
-            IAuth auth)
+            IAccountService accountService)
             : base(navigationService)
         {
-            _auth = auth;
+            _accountService = accountService;
         }
 
         #region Public Properties
@@ -47,22 +47,22 @@ namespace GoEng.ViewModels.SignInDetails
         
         #endregion
 
-
         #region Private Helpers
 
         private async Task OnLoginCommand()
         {
             IsBusy = true;
-            var res = await _auth.SignIn(Email, Password, Remember);
-            if (res.IsSuccess)
+
+            var res = await _accountService.LoginAsync(Email, Password, Remember);
+            if (res.IsSuccessful)
             {
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(HomeView)}");
             }
             else
             {
-                await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
-                    ErrorSettings.IncorrectLoginAndPass, AppSettings.OK);
+                await App.Current.MainPage.DisplayAlert(AppSettings.AppName, ErrorSettings.IncorrectLoginOrPass, AppSettings.OK);
             }
+
             IsBusy = false;
         }
 

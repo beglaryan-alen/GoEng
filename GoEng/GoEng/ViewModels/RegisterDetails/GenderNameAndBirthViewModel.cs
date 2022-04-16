@@ -1,4 +1,5 @@
-﻿using GoEng.Enums;
+﻿using GoEng.Enums.User;
+using GoEng.Services.AccountService;
 using GoEng.Services.Auth;
 using GoEng.Settings;
 using GoEng.Views.RegisterDetails;
@@ -8,20 +9,21 @@ using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace GoEng.ViewModels.RegisterDetails
 {
     public class GenderNameAndBirthViewModel : BaseViewModel
     {
-        private readonly IAuth _auth;
+        private readonly IAccountService _accountService;
         private string email;
         private string password;
         public GenderNameAndBirthViewModel(
             INavigationService navigationService,
-            IAuth auth)
+            IAccountService accountService)
             : base(navigationService)
         {
-            _auth = auth;
+            _accountService = accountService;
         }
 
         #region Public Properties
@@ -54,8 +56,8 @@ namespace GoEng.ViewModels.RegisterDetails
             set => SetProperty(ref _canContinue, value);
         }
 
-        public ICommand GirlCommand => new Command(() => Gender = EGender.Female);
-        public ICommand BoyCommand => new Command(() => Gender = EGender.Male);
+        public ICommand GirlCommand => new Xamarin.Forms.Command(() => Gender = EGender.Female);
+        public ICommand BoyCommand => new Xamarin.Forms.Command(() => Gender = EGender.Male);
         public ICommand NextCommand => new AsyncCommand(OnNextCommand);
 
         #endregion
@@ -96,41 +98,25 @@ namespace GoEng.ViewModels.RegisterDetails
         private async Task OnNextCommand()
         {
             IsBusy = true;
-                var res = await _auth.SignUp(email:email,
-                        password: password,
-                        birtDate: BirthDate,
-                        name: Name,
-                        gender: Gender);
-                if (res.IsSuccess)
-                {
-                    await NavigationService.NavigateAsync(nameof(SellectDifficultView));
-                }
-                else
-                {
-                    switch (res.AuthErrorReason)
-                    {
-                        case Firebase.Auth.AuthErrorReason.InvalidEmailAddress:
-                            await App.Current.MainPage.DisplayAlert(AppSettings.AppName, 
-                                ErrorSettings.RegisterErrorMessage_InvalidEmailAddress, AppSettings.OK);
-                            break;
-                        case Firebase.Auth.AuthErrorReason.WeakPassword:
-                            await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
-                                ErrorSettings.RegisterErrorMessage_WeakPassword, AppSettings.OK);
-                            break;
-                        case Firebase.Auth.AuthErrorReason.EmailExists:
-                            await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
-                                ErrorSettings.RegisterErrorMessage_EmailExist, AppSettings.OK);
-                            break;
-                        case Firebase.Auth.AuthErrorReason.TooManyAttemptsTryLater:
-                            await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
-                                ErrorSettings.RegisterErrorMessage_TooManyAttempts, AppSettings.OK);
-                            break;
-                        default:
-                            await App.Current.MainPage.DisplayAlert(AppSettings.AppName, 
-                                ErrorSettings.RegisterErrorMessage, AppSettings.OK);
-                            break;
-                    }
-                }
+
+            var res = await _accountService.CreateUserAsync(Name, email, BirthDate, Gender, password);
+
+            if (res.IsSuccessful)
+            {
+                await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SellectDifficultView)}");
+                await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
+                    AppSettings.Register_Congratulations, AppSettings.OK);
+            }
+            else if(res.ErrorType == Enums.Firebase.EFirebaseExcType.InvalidEmail)
+                await App.Current.MainPage.DisplayAlert(AppSettings.AppName, 
+                    ErrorSettings.RegisterErrorMessage_InvalidEmailAddress, AppSettings.OK);
+            else if (res.ErrorType == Enums.Firebase.EFirebaseExcType.InvalidPassword)
+                await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
+                    ErrorSettings.RegisterErrorMessage_InvalidPassword, AppSettings.OK);
+            else
+                await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
+                        ErrorSettings.RegisterErrorMessage, AppSettings.OK);
+
             IsBusy = false;
         }
 

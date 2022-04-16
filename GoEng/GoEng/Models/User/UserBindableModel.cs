@@ -1,4 +1,5 @@
 ﻿using GoEng.Enums;
+using GoEng.Enums.User;
 using Prism.Mvvm;
 using System;
 

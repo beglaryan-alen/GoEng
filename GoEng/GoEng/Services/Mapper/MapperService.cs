@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Firebase.Auth;
-using Firebase.Database;
-using GoEng.Models.FirebaseResponse;
-using GoEng.Models.Home;
+using GoEng.Models.Game;
+using GoEng.Models.User;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,19 +35,22 @@ namespace GoEng.Services.Mapper
         {
             var mapperConfiguration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<FirebaseAuthException, FirebaseResponse>()
-                .ForMember(dest => dest.AuthErrorReason, act => act.MapFrom(src => src.Reason));
-
-                cfg.CreateMap<FirebaseException, FirebaseResponse>()
-                .ForMember(dest => dest.StatusCode, act => act.MapFrom(src => src.StatusCode));
-
-                cfg.CreateMap<HomeModel, HomeBindableModel>()
-                .ForMember(dest => dest.IsBlocked, act => act.MapFrom(src => src.IsBlocked))
-                .ForMember(dest => dest.Star, act => act.MapFrom(src => src.Star))
-                .ForMember(dest => dest.IsTest, act => act.MapFrom(src => src.IsTest))
-                .ForMember(dest => dest.IsPassed, act => act.MapFrom(src => src.IsPassed))
+                cfg.CreateMap<UserModel, UserBindableModel>()
                 .ForMember(dest => dest.Name, act => act.MapFrom(src => src.Name))
+                .ForMember(dest => dest.PhotoUrl, act => act.MapFrom(src => src.PhotoUrl))
+                .ForMember(dest => dest.Email, act => act.MapFrom(src => src.Email))
+                .ForMember(dest => dest.DateOfBirth, act => act.MapFrom(src => src.DateOfBirth))
+                .ForMember(dest => dest.Gender, act => act.MapFrom(src => src.Gender))
                 .ReverseMap();
+
+                cfg.CreateMap<GameModel, GameBindableModel>()
+               .ForMember(dest => dest.Name, act => act.MapFrom(src => src.Name))
+               .ForMember(dest => dest.Game, act => act.MapFrom(src => src.Game))
+               .ForMember(dest => dest.IsTest, act => act.MapFrom(src => src.IsTest))
+               .ForMember(dest => dest.Star, act => act.MapFrom(src => src.Star))
+               .ForMember(dest => dest.GameVariant, act => act.MapFrom(src => src.GameVariant))
+               .ForMember(dest => dest.IsCurrent, act => act.MapFrom(src => src.IsCurrent))
+               .ReverseMap();
             });
 
             _mapperCompletionSource.SetResult(mapperConfiguration.CreateMapper());

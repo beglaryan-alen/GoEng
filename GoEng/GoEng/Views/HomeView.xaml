@@ -9,10 +9,9 @@
 
     <Grid Padding="20" RowDefinitions="Auto, *">
 
-        <Image
-            Grid.Row="0"
-            HorizontalOptions="Start"
-            Source="icon" />
+        <Image Grid.Row="0"
+               HorizontalOptions="Start"
+               Source="icon" />
         
         <ScrollView Grid.Row="1"
                     Orientation="Vertical"

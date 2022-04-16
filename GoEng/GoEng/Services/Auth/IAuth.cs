@@ -1,5 +1,5 @@
-﻿using GoEng.Enums;
-using GoEng.Models.FirebaseResponse;
+﻿using GoEng.Enums.User;
+using GoEng.Models.Firebase;
 using System;
 using System.Threading.Tasks;
 
@@ -7,13 +7,10 @@ namespace GoEng.Services.Auth
 {
     public interface IAuth
     {
-        Task<string> GetUserUID();
-        Task<FirebaseResponse> SignIn(string email, string password, bool shouldRemember);
-        Task<FirebaseResponse> SignUp(string email, 
-                          string password, string name, 
-                          EGender gender, DateTime birtDate);
-        Task<bool> SignInSilent();
-
-        Task<bool> SignOut();
+        Task<FirebaseResponse> LoginAsync(string email, string password);
+        Task<FirebaseResponse> GetUserAsync();
+        Task<FirebaseResponse> CreateUserAsync(string name, string email,
+            DateTime dateOfBirth, EGender gender,
+            string password, string photoUrl = "");
     }
 }

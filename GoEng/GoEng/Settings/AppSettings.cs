@@ -6,6 +6,7 @@
         public const string VerifyEmailText = "We have sent a message to your mail, please confirm the message and log in into your account";
         public const string OK = "OK";
         public const string Thanks = "Thanks!";
+        public const string Register_Congratulations = "Congratulations! You successfuly registered!";
         public const string LoadingText = "Loading....";
     }
 }

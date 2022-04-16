@@ -1,6 +1,6 @@
-﻿using GoEng.Enums;
-using GoEng.Models.Home;
-using GoEng.Services.Home;
+﻿using GoEng.Models.Game;
+using GoEng.Services.AccountService;
+using GoEng.Services.Auth;
 using MvvmHelpers.Commands;
 using Prism.Navigation;
 using System.Collections.ObjectModel;
@@ -11,25 +11,25 @@ namespace GoEng.ViewModels
 {
     public class HomeViewModel : BaseViewModel
     {
-        private readonly IHomeService _homeService;
+        private readonly IAccountService _accountService;
         public HomeViewModel(
             INavigationService navigationService,
-            IHomeService homeService)
+            IAccountService accountService)
             : base(navigationService)
         {
-            _homeService = homeService;
+            _accountService = accountService;
         }
 
         #region Public Properties
 
-        private ObservableCollection<HomeBindableModel> _collection;
-        public ObservableCollection<HomeBindableModel> Collection
+        private ObservableCollection<GameBindableModel> _collection;
+        public ObservableCollection<GameBindableModel> Collection
         {
             get => _collection;
             set => SetProperty(ref _collection, value);
         }
 
-        public ICommand TapCommand => new AsyncCommand<HomeBindableModel>(OnTapCommand);
+        public ICommand TapCommand => new AsyncCommand<GameBindableModel>(OnTappCommand);
 
         #endregion
 
@@ -38,21 +38,23 @@ namespace GoEng.ViewModels
         public async override void Initialize(INavigationParameters parameters)
         {
             base.Initialize(parameters);
-
             IsBusy = true;
-            var res = await _homeService.GetHomeModels();
-            Collection = new ObservableCollection<HomeBindableModel>(res);
+
+            var res = await _accountService.GetUserGames();
+            Collection = new ObservableCollection<GameBindableModel>(res);
+
             IsBusy = false;
         }
 
         #endregion
 
-        private async Task OnTapCommand(HomeBindableModel model)
-        {
-            if (!model.IsBlocked)
-            {
+        #region Private Helpers
 
-            }
+        private async Task OnTappCommand(GameBindableModel arg)
+        {
         }
+
+        #endregion
+
     }
 }
