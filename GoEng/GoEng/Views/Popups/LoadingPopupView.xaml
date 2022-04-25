@@ -19,24 +19,17 @@
                                    EasingOut="SinIn"/>
     </pages:PopupPage.Animation>
 
-    <Frame HorizontalOptions="Center"
-           BackgroundColor="{StaticResource appcolor_i1}"
-           VerticalOptions="Center">
+    <StackLayout VerticalOptions="Center"
+                 HorizontalOptions="Center">
 
-        <StackLayout>
-
-            <ff:CachedImage Source="loadingGif"
-                            HeightRequest="50"
+        <ff:CachedImage Source="loadingGif"
+                        HeightRequest="50"
                             />
 
-            <Label Text="{Binding LoadingText}"
-                   TextColor="{StaticResource appcolor_i3}"
-                   FontSize="{StaticResource tsize_i2}"/>
+        <Label Text="{Binding LoadingText}"
+               TextColor="{StaticResource appcolor_i3}"
+               FontSize="{StaticResource tsize_i2}"/>
 
-        </StackLayout>
+    </StackLayout>
 
-    </Frame>
-    
-    
-    
 </views:PopupPage>

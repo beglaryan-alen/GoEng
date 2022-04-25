@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="customNavBar"
+             x:Class="GoEng.Controls.CustomNavBar">
+
+    <Grid ColumnDefinitions="Auto, *">
+        <Image Source="icon"
+               HeightRequest="65"/>
+
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="End"
+                     IsVisible="{Binding RightIconsVisible, Source={x:Reference customNavBar}}"
+                     BindableLayout.ItemsSource="{Binding NavBarItems}"
+                     Grid.Column="1">
+
+            <BindableLayout.ItemTemplate>
+
+                <DataTemplate>
+
+                    <Frame CornerRadius="35"
+                           IsClippedToBounds="True"
+                           HeightRequest="50"
+                           WidthRequest="50"
+                           Padding="0">
+
+                        <StackLayout Orientation="Horizontal"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="5"
+                                     >
+
+                            <Image Source="{Binding Icon}"
+                                   Aspect="Fill"/>
+
+                            <Label Text="{Binding Content}"
+                                   FontAttributes="Bold"
+                                   IsVisible="{Binding IsContentVisible}"
+                                   FontSize="{StaticResource tsize_i3}"
+                                   TextColor="{StaticResource appcolor_i3}"/>
+
+                            <StackLayout.GestureRecognizers>
+
+                                <TapGestureRecognizer NumberOfTapsRequired="1"
+                                                      Command="{Binding TapCommand}"/>
+
+                            </StackLayout.GestureRecognizers>
+                            
+                        </StackLayout>
+                        
+                    </Frame>
+                    
+                </DataTemplate>
+                
+            </BindableLayout.ItemTemplate>
+            
+        </StackLayout>
+        
+    </Grid>
+    
+</StackLayout>

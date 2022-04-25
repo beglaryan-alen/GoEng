@@ -8,7 +8,7 @@
 
     <Grid Padding="20" RowDefinitions="Auto, *">
 
-        <Image HorizontalOptions="Start" Source="icon" />
+        <controls:CustomNavBar />
 
         <StackLayout
             Grid.Row="1"
@@ -21,7 +21,7 @@
                 Orientation="Horizontal"
                 Spacing="20">
 
-                <Image BackgroundColor="Transparent" Source="girl">
+                <Image BackgroundColor="Transparent" Source="circle_girl">
 
                     <Image.Triggers>
                         <DataTrigger
@@ -29,7 +29,7 @@
                             TargetType="Image"
                             Value="Female">
 
-                            <Setter Property="Source" Value="girl_stroke" />
+                            <Setter Property="Source" Value="circle_girl_stroke" />
 
                         </DataTrigger>
                     </Image.Triggers>
@@ -40,7 +40,7 @@
 
                 </Image>
 
-                <Image BackgroundColor="Transparent" Source="boy">
+                <Image BackgroundColor="Transparent" Source="circle_boy">
 
                     <Image.Triggers>
                         <DataTrigger
@@ -48,7 +48,7 @@
                             TargetType="Image"
                             Value="Male">
 
-                            <Setter Property="Source" Value="boy_stroke" />
+                            <Setter Property="Source" Value="circle_boy_stroke" />
 
                         </DataTrigger>
                     </Image.Triggers>

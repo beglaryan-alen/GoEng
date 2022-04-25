@@ -61,12 +61,12 @@ namespace GoEng.Droid
 
         private void InitializePackages(Bundle savedInstanceState)
         {
+            FirebaseApp.InitializeApp(this);
             Rg.Plugins.Popup.Popup.Init(this);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Forms.Init(this, savedInstanceState);
             FormsMaterial.Init(this, savedInstanceState);
             CachedImageRenderer.Init(enableFastRenderer: true);
-            FirebaseApp.InitializeApp(this);
         }
 
         #endregion

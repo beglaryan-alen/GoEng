@@ -5,14 +5,9 @@ using GoEng.Droid.Services;
 using GoEng.Enums.Firebase;
 using GoEng.Enums.User;
 using GoEng.Models.Firebase;
-using GoEng.Models.Game;
-using GoEng.Models.User;
 using GoEng.Services.Auth;
-using GoEng.Services.Game;
-using GoEng.Settings;
 using Java.Util;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -21,7 +16,6 @@ namespace GoEng.Droid.Services
 {
     public class Auth : IAuth
     {
-        private IGame _game => App.Resolve<IGame>();
         public Task<FirebaseResponse> GetUserAsync()
         {
             var tcs = new TaskCompletionSource<FirebaseResponse>();
@@ -40,14 +34,20 @@ namespace GoEng.Droid.Services
         {
             try
             {
+                FirebaseAuth.Instance.SignOut();
                 await FirebaseAuth.Instance.SignInWithEmailAndPasswordAsync(email, password);
-                return new FirebaseResponse(
-                    EFirebaseExcType.Ok);
+                return new FirebaseResponse
+                {
+                    Status = EFirebaseStatus.Ok,
+                    IsSuccessful = true,
+                };
             }
             catch (System.Exception ex)
             {
-                return new FirebaseResponse(
-                    EFirebaseExcType.InvalidEmailOrPassword);
+                return new FirebaseResponse
+                {
+                    Status = EFirebaseStatus.InvalidEmailOrPassword,
+                };
             }
         }
 
@@ -57,153 +57,93 @@ namespace GoEng.Droid.Services
         {
             try
             {
+                var pass = new Guid(password).ToString();
+
                 await FirebaseAuth.Instance.CreateUserWithEmailAndPasswordAsync(email, password);
                 string Uid = FirebaseAuth.Instance.CurrentUser.Uid;
-                UserModel user = new UserModel()
-                {
-                    Name = name,
-                    DateOfBirth = dateOfBirth,
-                    Email = email,
-                    IsEmailVerified = false,
-                    Gender = gender,
-                    PhotoUrl = photoUrl,
-                };
-                
                 HashMap userMap = new HashMap();
                 userMap.Put("name", name);
                 userMap.Put("email", email);
-                userMap.Put("isEmailVerified", false);
                 userMap.Put("dateOfBirth", dateOfBirth.ToString());
                 userMap.Put("gender", (int)gender);
+                userMap.Put("coins", 5);
+                userMap.Put("activeDays", 0);
                 FirebaseFirestore.Instance.Collection("users")
                     .Document(Uid)
                     .Set(userMap);
 
-                return new FirebaseResponse(
-                    EFirebaseExcType.Ok);
+                return new FirebaseResponse
+                {
+                    Status = EFirebaseStatus.Ok,
+                    IsSuccessful = true,
+                };
             }
             catch (FirebaseAuthEmailException ex)
             {
-                return new FirebaseResponse(
-                    EFirebaseExcType.InvalidEmail,
-                    ex.Message);
+                return new FirebaseResponse
+                {
+                    Status = EFirebaseStatus.InvalidEmail,
+                    Message = ex.Message,
+                };
             }
             catch (FirebaseAuthWeakPasswordException ex)
             {
-                return new FirebaseResponse(
-                    EFirebaseExcType.InvalidPassword,
-                    ex.Message);
+                return new FirebaseResponse 
+                {
+                    Message = ex.Message,
+                    Status = EFirebaseStatus.InvalidPassword,
+                };
             }
             catch (FirebaseAuthInvalidCredentialsException ex)
             {
-                return new FirebaseResponse(
-                    EFirebaseExcType.InvalidEmailOrPassword,
-                    ex.Message);
+                return new FirebaseResponse
+                {
+                    Status = EFirebaseStatus.InvalidEmailOrPassword,
+                    Message = ex.Message,
+                };
             }
             catch(Exception ex)
             {
-                return new FirebaseResponse(
-                    EFirebaseExcType.Exception);
+                return new FirebaseResponse
+                {
+                    Status = EFirebaseStatus.Exception
+                };
             }
         }
 
-        //public async Task<FirebaseResponse> UpdateUserGameLevel(EGame gameToUpdate)
-        //{
-        //    try
-        //    {
-        //        var dictionary = new Dictionary<string, Java.Lang.Object>();
-        //        dictionary.Add("gameLevel", (int)gameToUpdate);
-        //        FirebaseFirestore.Instance.Collection("users")
-        //        .Document(FirebaseAuth.Instance.CurrentUser.Uid)
-        //        .Update(dictionary);
+        public async Task<FirebaseResponse> RechekEmailVerification()
+        {
+            await FirebaseAuth.Instance.CurrentUser.ReloadAsync();
+            if (FirebaseAuth.Instance.CurrentUser.IsEmailVerified)
+            {
+                return new FirebaseResponse()
+                {
+                    Status = EFirebaseStatus.Ok,
+                    IsSuccessful = true,
+                };
+            }
+            else
+            {
+                FirebaseAuth.Instance.CurrentUser.SendEmailVerification();
+                return new FirebaseResponse()
+                {
+                    Status = EFirebaseStatus.EmailNotVerified,
+                };
+            }
+        }
 
-        //        return new FirebaseResponse(
-        //            EFirebaseExcType.Ok);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new FirebaseResponse(
-        //            EFirebaseExcType.Exception);
-        //    }
-
-        //}
-
-        //public async Task<FirebaseResponse> UpdateUserGameLevelVariant(EGameVariant gameVariantToUpdate)
-        //{
-        //    try
-        //    {
-        //        var dictionary = new Dictionary<string, Java.Lang.Object>();
-        //        dictionary.Add("gameLevelVariant", (int)gameVariantToUpdate);
-        //        FirebaseFirestore.Instance.Collection("users")
-        //        .Document(FirebaseAuth.Instance.CurrentUser.Uid)
-        //        .Update(dictionary);
-
-        //        return new FirebaseResponse(
-        //            EFirebaseExcType.Ok);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return new FirebaseResponse(
-        //            EFirebaseExcType.Exception);
-        //    }
-        //}
-
-        //public async Task<EGame> GetGame()
-        //{
-        //    var res = await GetUserAsync();
-        //    return res.GameLevel;
-        //}
-
-        //public async Task<EGameVariant> GetGameVariant()
-        //{
-        //    var res = await GetUserAsync();
-        //    return res.GameLevelVariant;
-        //}
-
-        //public async Task<FirebaseResponse> UpdateUserPassedGame(GameModel game)
-        //{
-        //    try
-        //    {
-        //        var user = await GetUserAsync();
-        //        if (!user.Games.Contains(game))
-        //        {
-        //            user.Games.Add(game);
-        //        }
-        //        else
-        //        {
-        //        }
-        //        HashMap hash = new HashMap();
-        //        foreach (var item in user.Games)
-        //        {
-        //            hash.Put("game", item.Game.ToString());
-        //            hash.Put("star", item.Star.ToString());
-        //        }
-
-        //        FirebaseFirestore.Instance.Collection("users")
-        //            .Document(FirebaseAuth.Instance.Uid)
-        //            .Update("games", hash);
-        //        return new FirebaseResponse(
-        //                EFirebaseExcType.Ok);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new FirebaseResponse(
-        //            EFirebaseExcType.Exception);
-        //    }
-
-        //}
-
-        //public async Task<IEnumerable<GameModel>> GetAllPassedGames()
-        //{
-        //    try
-        //    {
-        //        var user = await GetUserAsync();
-        //        return user.Games;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return null;
-        //    }
-        //}
+        public async Task<FirebaseResponse> IsUserEmailVerified()
+        {
+            if (FirebaseAuth.Instance.CurrentUser.IsEmailVerified)
+                return new FirebaseResponse()
+                {
+                    Status = EFirebaseStatus.EmailVerified,
+                    IsSuccessful = true,
+                };
+            return new FirebaseResponse()
+            {
+                Status = EFirebaseStatus.EmailNotVerified,
+            };
+        }
     }
 }

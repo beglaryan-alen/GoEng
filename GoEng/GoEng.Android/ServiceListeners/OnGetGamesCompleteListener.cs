@@ -52,57 +52,70 @@ namespace GoEng.Droid.ServiceListeners
                                 var game = doc.Get($"game-{(EGame)i}");
                                 var dictioanryFromHashMap = new JavaDictionary<string, string>(game.Handle, Android.Runtime.JniHandleOwnership.DoNotRegister);
                                 GameModel gameToAdd = new GameModel();
-                                gameToAdd.Name = dictioanryFromHashMap["name"];
                                 gameToAdd.IsTest = bool.Parse(dictioanryFromHashMap["isTest"]);
+                                gameToAdd.IsBlocked = bool.Parse(dictioanryFromHashMap["isBlocked"]);
                                 gameToAdd.IsCurrent = bool.Parse(dictioanryFromHashMap["isCurrent"]);
+                                gameToAdd.IsPassed = bool.Parse(dictioanryFromHashMap["isPassed"]);
                                 gameToAdd.GameVariant = (EGameVariant)int.Parse(dictioanryFromHashMap["gameVariant"]);
                                 gameToAdd.Star = (EStar)int.Parse(dictioanryFromHashMap["star"]);
                                 gameToAdd.Game = (EGame)int.Parse(dictioanryFromHashMap["game"]);
                                 games.Add(gameToAdd);
                             }
 
-                            _tcs.SetResult(new FirebaseResponse(EFirebaseExcType.Ok)
+                            _tcs.SetResult(new FirebaseResponse()
                             {
-                                Content = games
+                                Content = games,
+                                Status = EFirebaseStatus.Ok,
+                                IsSuccessful = true,
                             });
                         }
-                        else if(_status == ListenerStatus.Update)
+                        else if (_status == ListenerStatus.Update)
                         {
                             IDictionary<string, Java.Lang.Object> allToUpdate = new Dictionary<string, Java.Lang.Object>();
                             foreach (var item in _games)
                             {
                                 HashMap gameMap = new HashMap();
-                                gameMap.Put("name", item.Name);
                                 gameMap.Put("isTest", item.IsTest);
+                                gameMap.Put("isPassed", item.IsPassed);
                                 gameMap.Put("isCurrent", item.IsCurrent);
+                                gameMap.Put("isBlocked", item.IsBlocked);
                                 gameMap.Put("gameVariant", (int)item.GameVariant);
                                 gameMap.Put("star", (int)item.Star);
                                 gameMap.Put("game", (int)item.Game);
                                 allToUpdate.Add($"game-{item.Game}", gameMap);
                             }
-                            
+
                             FirebaseFirestore.Instance.Collection("games")
                                 .Document(FirebaseAuth.Instance.CurrentUser.Uid)
                                 .Update(allToUpdate);
 
-                            _tcs.SetResult(new FirebaseResponse(EFirebaseExcType.Ok));
+                            _tcs.SetResult(new FirebaseResponse()
+                            {
+                                Status = EFirebaseStatus.Ok,
+                                IsSuccessful = true,
+                            });
                         }
                         else
                         {
-                            _tcs.SetResult(new FirebaseResponse(EFirebaseExcType.ServerException));
+                            _tcs.SetResult(new FirebaseResponse
+                            {
+                                Status = EFirebaseStatus.ServerException
+                            });
                         }
                     }
                     else
                     {
                         if (_status == ListenerStatus.Read ||
-                            _status == ListenerStatus.Update) _tcs.SetResult(new FirebaseResponse(EFirebaseExcType.ServerException));
+                            _status == ListenerStatus.Update) 
+                                _tcs.SetResult(new FirebaseResponse { Status = EFirebaseStatus.ServerException});
                         HashMap allGames = new HashMap();
                         foreach (var item in _games)
                         {
                             HashMap gameMap = new HashMap();
-                            gameMap.Put("name", item.Name);
                             gameMap.Put("isTest", item.IsTest);
+                            gameMap.Put("isBlocked", item.IsBlocked);
                             gameMap.Put("isCurrent", item.IsCurrent);
+                            gameMap.Put("isPassed", item.IsPassed);
                             gameMap.Put("gameVariant", (int)item.GameVariant);
                             gameMap.Put("star", (int)item.Star);
                             gameMap.Put("game", (int)item.Game);
@@ -112,12 +125,19 @@ namespace GoEng.Droid.ServiceListeners
                         FirebaseFirestore.Instance.Collection("games")
                                 .Document(FirebaseAuth.Instance.CurrentUser.Uid)
                                 .Set(allGames);
-                        _tcs.SetResult(new FirebaseResponse(EFirebaseExcType.Ok));
+                        _tcs.SetResult(new FirebaseResponse
+                        {
+                            Status = EFirebaseStatus.Ok,
+                            IsSuccessful = true,
+                        });
                     }
                 }
             }
             // something went wrong
-            _tcs.TrySetResult(new FirebaseResponse(Enums.Firebase.EFirebaseExcType.ServerException));
+            _tcs.TrySetResult(new FirebaseResponse
+            {
+                Status = EFirebaseStatus.ServerException,
+            });
         }
     }
 }

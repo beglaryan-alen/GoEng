@@ -16,8 +16,10 @@ namespace GoEng.Models.User
 
         public string Email { get; set; }
 
-        public bool IsEmailVerified { get; set; }
-        
+        public int Coins { get; set; }
+
+        public int ActiveDays { get; set; }
+
         public DateTime DateOfBirth { get; set; }
         
         public EGender Gender { get; set; }

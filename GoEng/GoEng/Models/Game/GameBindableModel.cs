@@ -15,11 +15,11 @@ namespace GoEng.Models.Game
             set => SetProperty(ref _name, value);
         }
 
-        private EGame _gameType;
+        private EGame _game;
         public EGame Game
         {
-            get => _gameType;
-            set => SetProperty(ref _gameType, value);
+            get => _game;
+            set => SetProperty(ref _game, value);
         }
 
         private bool _isTest;
@@ -29,11 +29,25 @@ namespace GoEng.Models.Game
             set => SetProperty(ref _isTest, value);
         }
 
+        private bool _isBlocked;
+        public bool IsBlocked
+        {
+            get => _isBlocked;
+            set => SetProperty(ref _isBlocked, value);
+        }
+
         private bool _isCurrent;
         public bool IsCurrent
         {
             get => _isCurrent;
             set => SetProperty(ref _isCurrent, value);
+        }
+
+        private bool _isPassed;
+        public bool IsPassed
+        {
+            get => _isPassed;
+            set => SetProperty(ref _isPassed, value);
         }
 
         private EStar _star;

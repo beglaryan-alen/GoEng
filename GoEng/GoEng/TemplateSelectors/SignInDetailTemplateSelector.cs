@@ -15,7 +15,7 @@ namespace GoEng.TemplateSelectors
             {
                 LoginTabViewModel => LogInTemplate,
                 RegisterTabViewModel => RegisterTemplate,
-                _ => throw new Exception()
+                _ => throw new NotImplementedException(),
             };
     }
 }

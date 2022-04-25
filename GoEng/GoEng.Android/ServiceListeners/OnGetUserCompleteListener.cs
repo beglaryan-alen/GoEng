@@ -1,5 +1,6 @@
 ﻿using Android.Gms.Tasks;
 using Firebase.Firestore;
+using GoEng.Enums.Firebase;
 using GoEng.Enums.User;
 using GoEng.Models.Firebase;
 using GoEng.Models.User;
@@ -23,23 +24,28 @@ namespace GoEng.Droid.ServiceListeners
             {
                 // process document
                 var result = task.Result;
-
                 if (result is DocumentSnapshot doc)
                 {
                     var user = new UserModel();
                     user.DateOfBirth = DateTime.Parse(doc.GetString("dateOfBirth"));
                     user.Email = doc.GetString("email");
-                    user.IsEmailVerified = bool.Parse(doc.GetString("isEmailVerified"));
                     user.Name = doc.GetString("name");
-                    user.Gender = (EGender)int.Parse(doc.GetString("gender"));
-                    _tcs.TrySetResult(new FirebaseResponse(Enums.Firebase.EFirebaseExcType.Ok)
+                    user.Gender = (EGender)(Double)doc.GetDouble("gender");
+                    user.Coins = Convert.ToInt32(doc.GetDouble("coins"));
+                    user.ActiveDays = Convert.ToInt32(doc.GetDouble("activeDays"));
+                    _tcs.TrySetResult(new FirebaseResponse
                     {
-                        Content = user
+                        Content = user,
+                        IsSuccessful = true,
+                        Status = EFirebaseStatus.Ok,
                     });
                 }
             }
             // something went wrong
-            _tcs.TrySetResult(new FirebaseResponse(Enums.Firebase.EFirebaseExcType.ServerException));
+            _tcs.TrySetResult(new FirebaseResponse
+            {
+                Status = EFirebaseStatus.ServerException,
+            });
         }
     }
 }

@@ -1,7 +1,15 @@
-﻿using GoEng.Views.Popups;
+﻿using GoEng.Enums.NavBar;
+using GoEng.Models.NavBar;
+using GoEng.Views.Popups;
+using GoEng.Views.Popups.PagesPopup;
+using MvvmHelpers.Commands;
 using Prism.AppModel;
 using Prism.Mvvm;
 using Prism.Navigation;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace GoEng.ViewModels
 {
@@ -10,10 +18,13 @@ namespace GoEng.ViewModels
 
         protected INavigationService NavigationService { get; }
         
-        public BaseViewModel(INavigationService navigationService)
+        public BaseViewModel(
+            INavigationService navigationService)
         {
             NavigationService = navigationService;
         }
+
+        #region Public Properties
 
         private bool _isBusy;
         public bool IsBusy
@@ -29,19 +40,13 @@ namespace GoEng.ViewModels
             }
         }
 
-        private async void SetLoadingPage()
-        {
-            if (IsBusy)
-            {
-                await NavigationService.NavigateAsync(nameof(LoadingPopupView));
-            }
-            else
-            {
-                await NavigationService.ClearPopupStackAsync();
-            }
-        }
+        
 
-        #region -- Iinitialize implementation --
+        public ICommand GoBackCommand => new AsyncCommand(async() => await NavigationService.GoBackAsync());
+
+        #endregion
+
+        #region Iinitialize implementation
 
         public virtual void Initialize(INavigationParameters parameters)
         {
@@ -54,6 +59,24 @@ namespace GoEng.ViewModels
         public virtual void OnDisappearing()
         {
         }
+
+        #endregion
+
+        #region Private Helpers
+
+        private async void SetLoadingPage()
+        {
+            if (IsBusy)
+            {
+                await NavigationService.NavigateAsync(nameof(LoadingPopupView));
+            }
+            else
+            {
+                await NavigationService.ClearPopupStackAsync();
+            }
+        }
+
+        
 
         #endregion
     }

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage xmlns:views="clr-namespace:GoEng.Views"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:controls="clr-namespace:GoEng.Controls" 
+                       xmlns:selectors="clr-namespace:GoEng.TemplateSelectors"
+                       x:Class="GoEng.Views.Home.GameVariantView">
+    <StackLayout>
+
+        <controls:HomeDetailsNavBar />
+
+        <CarouselView
+                HorizontalOptions="Center"
+                HorizontalScrollBarVisibility="Never"
+                IsSwipeEnabled="False"
+                ItemsSource="{Binding TabItems}"
+                Position="{Binding CurrentGameVariant}"
+                VerticalOptions="Center"
+                VerticalScrollBarVisibility="Never">
+
+            <CarouselView.ItemTemplate>
+
+                <selectors:GameVariantTemplateSelector>
+
+                    <!--<selectors:SignInDetailTemplateSelector.RegisterTemplate>
+
+                        <DataTemplate>
+
+                            <signInDetails:RegisterTabView BindingContext="{Binding RegisterTabViewModel}" />
+
+                        </DataTemplate>
+
+                    </selectors:SignInDetailTemplateSelector.RegisterTemplate>
+
+                    <selectors:SignInDetailTemplateSelector.LogInTemplate>
+
+                        <DataTemplate>
+
+                            <signInDetails:LogInTabView BindingContext="{Binding LoginTabViewModel}" />
+
+                        </DataTemplate>
+
+                    </selectors:SignInDetailTemplateSelector.LogInTemplate>
+
+                </selectors:SignInDetailTemplateSelector>-->
+
+            </CarouselView.ItemTemplate>
+
+        </CarouselView>
+        
+    </StackLayout>
+
+</views:BaseContentPage>

@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="homeDetailsNavBar"
+             x:Class="GoEng.Controls.HomeDetailsNavBar">
+    <Grid ColumnDefinitions="Auto, *"
+          VerticalOptions="Center">
+
+        <StackLayout Orientation="Horizontal">
+            <Image Source="close">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand, Source={x:Reference homeDetailsNavBar}}"
+                                          NumberOfTapsRequired="1"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Label TextColor="{StaticResource appcolor_i3}"
+                   FontSize="{StaticResource tsize_i3}"
+                   VerticalTextAlignment="Center"
+                   FontAttributes="Bold">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding CurrentGameVariant, Source={x:Reference homeDetailsNavBar}}"/>
+                        <Span Text="/"/>
+                        <Span Text="{Binding GameVariantsCount, Source={x:Reference homeDetailsNavBar}}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+
+        <Frame Grid.Column="1"
+               Padding="20, 10, 20, 10"
+               Margin="10, 0"
+               CornerRadius="20"
+               IsVisible="{Binding HasLoadControl, Converter={StaticResource InvertedBoolConverter}}"
+               BorderColor="{StaticResource appcolor_i3}"
+               HorizontalOptions="FillAndExpand">
+            <Grid ColumnDefinitions="Auto, *"
+                  VerticalOptions="Center">
+
+                <Image Source="volume"/>
+
+                <Label Text="{Binding Title, Source={x:Reference homeDetailsNavBar}}"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"
+                       VerticalOptions="Center"
+                       TextColor="{StaticResource appcolor_i3}"
+                       HorizontalOptions="Center"
+                       FontSize="{StaticResource tsize_i2}"/>
+            </Grid>
+        </Frame>
+
+        <Grid Grid.Column="1"
+              ColumnDefinitions="*, Auto"
+              VerticalOptions="Center">
+            <Slider Value="{Binding CurrentGameVariant, Source={x:Reference homeDetailsNavBar}}"
+                    Margin="10, 0"
+                    ThumbColor="Transparent"
+                    Minimum="0"
+                    MaximumTrackColor="{StaticResource appcolor_i3}"
+                    MinimumTrackColor="{StaticResource appcolor_i6}"
+                    Maximum="{Binding GameVariantsCount, Source={x:Reference homeDetailsNavBar}}"/>
+            <StackLayout Grid.Column="1"
+                         Orientation="Horizontal">
+                <Image Source="ticket"
+                       IsVisible="{Binding IsRightIconVisible, Source={x:Reference homeDetailsNavBar}}"/>
+                <Label Text="{Binding Coins, Source={x:Reference homeDetailsNavBar}}"
+                       FontSize="{StaticResource tsize_i2}"
+                       TextColor="{StaticResource appcolor_i3}"/>
+            </StackLayout>
+        </Grid>
+        
+    </Grid>
+</StackLayout>

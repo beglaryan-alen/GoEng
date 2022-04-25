@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StackLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="customPopupNavBar"
+             x:Class="GoEng.Controls.CustomDefaultNavBar">
+    
+    <Grid ColumnDefinitions="Auto, *">
+
+        <Image Source="close"
+               VerticalOptions="Start">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CloseCommand, Source={x:Reference customPopupNavBar}}"
+                                      NumberOfTapsRequired="1"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <Grid Grid.Column="1">
+            
+            <StackLayout HorizontalOptions="Center">
+
+                <Image Grid.Column="1"
+                       Source="{Binding Icon, Source={x:Reference customPopupNavBar}}"/>
+
+                <Label Text="{Binding Title, Source={x:Reference customPopupNavBar}}"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{StaticResource appcolor_i3}"
+                       FontSize="{StaticResource tsize_i2}"/>
+
+            </StackLayout>
+            
+
+        </Grid>
+        
+
+    </Grid>
+</StackLayout>

@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <view:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      xmlns:view="clr-namespace:GoEng.Views"
+                      xmlns:view="clr-namespace:GoEng.Views" xmlns:controls="clr-namespace:GoEng.Controls"
                       x:Class="GoEng.Views.RegisterDetails.SellectDifficultView">
 
     <Grid Padding="20" 
           RowDefinitions="Auto, *">
 
-        <Image HorizontalOptions="Start" 
-               Source="icon" />
+        <controls:CustomNavBar />
 
         <StackLayout Grid.Row="1"
                      Spacing="20"

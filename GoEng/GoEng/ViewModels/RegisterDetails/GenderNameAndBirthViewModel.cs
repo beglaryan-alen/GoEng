@@ -106,18 +106,20 @@ namespace GoEng.ViewModels.RegisterDetails
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(SellectDifficultView)}");
                 await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
                     AppSettings.Register_Congratulations, AppSettings.OK);
+                return;
             }
-            else if(res.ErrorType == Enums.Firebase.EFirebaseExcType.InvalidEmail)
+            else if(res.Status == Enums.Firebase.EFirebaseStatus.InvalidEmail)
                 await App.Current.MainPage.DisplayAlert(AppSettings.AppName, 
                     ErrorSettings.RegisterErrorMessage_InvalidEmailAddress, AppSettings.OK);
-            else if (res.ErrorType == Enums.Firebase.EFirebaseExcType.InvalidPassword)
+            else if (res.Status == Enums.Firebase.EFirebaseStatus.InvalidPassword)
                 await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
                     ErrorSettings.RegisterErrorMessage_InvalidPassword, AppSettings.OK);
             else
                 await App.Current.MainPage.DisplayAlert(AppSettings.AppName,
                         ErrorSettings.RegisterErrorMessage, AppSettings.OK);
-
             IsBusy = false;
+
+            await NavigationService.GoBackAsync();
         }
 
         #endregion

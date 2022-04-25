@@ -39,8 +39,7 @@ namespace GoEng.Services.AccountService
 
         public async Task<FirebaseResponse> CreateUserAsync(string name, 
             string email, DateTime dateOfBirth, 
-            EGender gender, string password, 
-            string photoUrl = "")
+            EGender gender, string password, string photoUrl = "")
         {
             var gamesBindable = _defaultRepos.GetStartGames();
             var games = await _mapperService.MapRangeAsync<GameModel>(gamesBindable);
@@ -49,27 +48,29 @@ namespace GoEng.Services.AccountService
             {
                 var gameRes = await _game.UpdateGamesAsync(games);
                 if (!gameRes.IsSuccessful)
-                    return new FirebaseResponse(EFirebaseExcType.ServerException);
-                return new FirebaseResponse(EFirebaseExcType.Ok);
+                    return new FirebaseResponse 
+                    { 
+                        Status = EFirebaseStatus.ServerException 
+                    };
+                return new FirebaseResponse()
+                {
+                    Status = EFirebaseStatus.Ok,
+                    IsSuccessful = true,
+                };
             }
             return authRes;
         }
 
-        public async Task<UserBindableModel> GetUserAsync()
+        public async Task<FirebaseResponse> GetUserAsync()
         {
             var res = await _auth.GetUserAsync();
-            if (res.IsSuccessful)
-            {
-                var user = await _mapperService.MapAsync<UserBindableModel>(res.Content as UserModel);
-                return user;
-            }
-            else
-            {
-                throw new Exception("Something went wrong.");
-            }
+            var user = res.Content as UserModel;
+            var bindableModel = await _mapperService.MapAsync<UserBindableModel>(user);
+            res.Content = bindableModel;
+            return res;
         }
 
-        public async Task<FirebaseResponse> LoginSilentAsync()
+        public async Task<bool> LoginSilentAsync()
         {
             var email = _cacheService.Get(CacheSettings.Email);
             var pass = _cacheService.Get(CacheSettings.Password);
@@ -77,13 +78,12 @@ namespace GoEng.Services.AccountService
                 pass != null)
             {
                 var res = await _auth.LoginAsync(email, pass);
-                return res;
+                return res.IsSuccessful;
             }
-            return new FirebaseResponse(
-                EFirebaseExcType.Exception);
+            return false;
         }
 
-        public async Task<FirebaseResponse> LoginAsync(string email, string password, bool remember)
+        public async Task<bool> LoginAsync(string email, string password, bool remember)
         {
             var res = await _auth.LoginAsync(email, password);
 
@@ -93,22 +93,42 @@ namespace GoEng.Services.AccountService
                 _cacheService.Add(CacheSettings.Email, email, TimeSpan.FromDays(2));
                 _cacheService.Add(CacheSettings.Password, password, TimeSpan.FromDays(2));
             }
-            return res;
+            return res.IsSuccessful;
         }
 
-        public async Task<List<GameBindableModel>> GetUserGames()
+        public async Task<FirebaseResponse> GetUserGames()
         {
             var res = await _game.GetUserGames();
             if (res.IsSuccessful)
             {
                 var models = res.Content as List<GameModel>;
-                var bindableModels = await _mapperService.MapRangeAsync<GameBindableModel>(models);
-                return bindableModels.ToList();
+                var bindableModels = await _defaultRepos.GetGameBindableModels(models);
+                return new FirebaseResponse
+                {
+                    Content = bindableModels,
+                    Status = EFirebaseStatus.Ok,
+                    IsSuccessful = true,
+                };
             }
             else
             {
-                throw new Exception("Something went wrong.");
+                return new FirebaseResponse
+                {
+                    Status = EFirebaseStatus.Exception,
+                };
             }
+        }
+
+        public async Task<bool> RecheckEmailVerify()
+        {
+            var res = await _auth.RechekEmailVerification();
+            return res.IsSuccessful;
+        }
+
+        public async Task<bool> IsUserEmailVerified()
+        {
+            var res = await _auth.IsUserEmailVerified();
+            return res.IsSuccessful;
         }
     }
 }

@@ -3,12 +3,13 @@
     x:Class="GoEng.Views.WelcomeView"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:GoEng.Controls"
     xmlns:views="clr-namespace:GoEng.Views"
     BackgroundColor="{StaticResource appcolor_i1}">
 
     <Grid Padding="20" RowDefinitions="Auto, *">
 
-        <Image HorizontalOptions="Start" Source="icon" />
+        <controls:CustomNavBar />
 
         <Grid Grid.Row="1" RowDefinitions="0.6*, 0.3*, 0.1*, Auto">
 

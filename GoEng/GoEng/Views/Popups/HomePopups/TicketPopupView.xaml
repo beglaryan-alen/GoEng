@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:views="http://rotorgames.com"
+                 xmlns:controls="clr-namespace:GoEng.Controls"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 x:Class="GoEng.Views.Popups.PagesPopup.TicketPopupView">
+
+    <pages:PopupPage.Animation>
+
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+
+    </pages:PopupPage.Animation>
+    <Grid ColumnDefinitions="0.1*, 0.8*, 0.1*">
+
+        <Frame BackgroundColor="{StaticResource appcolor_i1}"
+               Grid.Column="1"
+               CornerRadius="15"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+           >
+
+            <StackLayout Spacing="30"
+                         Padding="10">
+
+                <controls:CustomDefaultNavBar Icon="ticket"
+                                              Title="{Binding Title}"
+                                              CloseCommand="{Binding ClearPopupCommand}"/>
+
+                <StackLayout Spacing="20">
+
+                    <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="Start">
+
+                        <Image Source="copy">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CopyCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label Text="{Binding CopyText}"
+                               VerticalOptions="Center"
+                               FontSize="{StaticResource tsize_i3}"
+                               TextColor="{StaticResource appcolor_i3}"/>
+
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="Start">
+
+                        <Image Source="share">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShareCommand}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+                        
+                        <Label Text="{Binding ShareText}"
+                               VerticalOptions="Center"
+                               FontSize="{StaticResource tsize_i3}"
+                               TextColor="{StaticResource appcolor_i3}"/>
+
+                    </StackLayout>
+
+                </StackLayout>
+
+            </StackLayout>
+
+
+        </Frame>
+
+
+    </Grid>
+
+</views:PopupPage>

@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Name="homeDetailsCell"
+      x:Class="GoEng.Cells.HomeDetailsCell">
+
+    <Frame Padding="10"
+           HeightRequest="150"
+           BackgroundColor="{StaticResource appcolor_i1}"
+           BorderColor="{StaticResource appcolor_i6}"
+           CornerRadius="15">
+
+        <Grid VerticalOptions="Center"
+              RowSpacing="15"
+              RowDefinitions="*, Auto">
+
+            <Image Source="{Binding Icon}"
+                   Aspect="AspectFit">
+                <Image.Triggers>
+                    <DataTrigger TargetType="Image"
+                                 Binding="{Binding IsStart}"
+                                 Value="True">
+                        <Setter Property="IsVisible"
+                                Value="False"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Image"
+                                 Binding="{Binding IsQuestion}"
+                                 Value="True">
+                        <Setter Property="IsVisible"
+                                Value="False"/>
+                    </DataTrigger>
+                </Image.Triggers>
+            </Image>
+
+            <Label Text="{Binding Name}"
+                   Grid.Row="1"
+                   FontSize="{StaticResource tsize_i3}"
+                   TextColor="{StaticResource appcolor_i3}"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   >
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label"
+                                 Binding="{Binding IsQuestion}"
+                                 Value="True">
+                        <Setter Property="TextColor"
+                                Value="{StaticResource appcolor_i1}"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+        </Grid>
+
+        <Frame.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding TapCommand, Source={x:Reference homeDetailsCell}}"
+                                  CommandParameter="{Binding }"/>
+        </Frame.GestureRecognizers>
+        
+        <Frame.Triggers>
+            
+            <DataTrigger TargetType="Frame"
+                         Binding="{Binding IsStart}"
+                         Value="True">
+                
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource appcolor_i4}"/>
+                
+            </DataTrigger>
+
+            <DataTrigger TargetType="Frame"
+                         Binding="{Binding IsQuestion}"
+                         Value="True">
+
+                <Setter Property="BackgroundColor"
+                        Value="{StaticResource appcolor_i3}"/>
+
+            </DataTrigger>
+        </Frame.Triggers>
+
+    </Frame>
+
+</Grid>

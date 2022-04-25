@@ -11,10 +11,7 @@
 
     <Grid Padding="20" RowDefinitions="Auto, *">
 
-        <Image
-            Grid.Row="0"
-            HorizontalOptions="Start"
-            Source="icon" />
+        <controls:CustomNavBar />
 
         <!--#region CarouselView-->
 

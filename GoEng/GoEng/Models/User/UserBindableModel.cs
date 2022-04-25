@@ -23,6 +23,20 @@ namespace GoEng.Models.User
             set => SetProperty(ref _name, value);
         }
 
+        private int _coins;
+        public int Coins 
+        {
+            get => _coins;
+            set => SetProperty(ref _coins, value);
+        }
+
+        private int _activeDays;
+        public int ActiveDays
+        {
+            get => _activeDays;
+            set => SetProperty(ref _activeDays, value);
+        }
+
         private string _email;
         public string Email
         {

@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace GoEng.Cells
 {
-    public partial class HomeCell : Frame
+    public partial class HomeCell : Grid
     {
         public HomeCell()
         {

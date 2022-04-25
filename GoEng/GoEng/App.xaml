@@ -4,7 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:styles="clr-namespace:GoEng.Resources.Styles"
-    xmlns:unity="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms">
+    xmlns:unity="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms" 
+    xmlns:local="clr-namespace:GoEng.Converters">
 
     <unity:PrismApplication.Resources>
 

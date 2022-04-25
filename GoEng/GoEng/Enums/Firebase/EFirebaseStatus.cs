@@ -1,6 +1,6 @@
 ﻿namespace GoEng.Enums.Firebase
 {
-    public enum EFirebaseExcType
+    public enum EFirebaseStatus
     {
         Ok,
         InvalidEmailOrPassword,
@@ -8,5 +8,7 @@
         InvalidPassword,
         Exception,
         ServerException,
+        EmailNotVerified,
+        EmailVerified,
     }
 }

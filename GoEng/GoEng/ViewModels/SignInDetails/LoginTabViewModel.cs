@@ -54,16 +54,15 @@ namespace GoEng.ViewModels.SignInDetails
             IsBusy = true;
 
             var res = await _accountService.LoginAsync(Email, Password, Remember);
-            if (res.IsSuccessful)
+            if (res)
             {
                 await NavigationService.NavigateAsync($"/{nameof(NavigationPage)}/{nameof(HomeView)}");
             }
             else
             {
+                IsBusy = false;
                 await App.Current.MainPage.DisplayAlert(AppSettings.AppName, ErrorSettings.IncorrectLoginOrPass, AppSettings.OK);
             }
-
-            IsBusy = false;
         }
 
         #endregion

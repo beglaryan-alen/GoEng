@@ -38,17 +38,20 @@ namespace GoEng.Services.Mapper
                 cfg.CreateMap<UserModel, UserBindableModel>()
                 .ForMember(dest => dest.Name, act => act.MapFrom(src => src.Name))
                 .ForMember(dest => dest.PhotoUrl, act => act.MapFrom(src => src.PhotoUrl))
+                .ForMember(dest => dest.Coins, act => act.MapFrom(src => src.Coins))
+                .ForMember(dest => dest.ActiveDays, act => act.MapFrom(src => src.ActiveDays))
                 .ForMember(dest => dest.Email, act => act.MapFrom(src => src.Email))
                 .ForMember(dest => dest.DateOfBirth, act => act.MapFrom(src => src.DateOfBirth))
                 .ForMember(dest => dest.Gender, act => act.MapFrom(src => src.Gender))
                 .ReverseMap();
 
                 cfg.CreateMap<GameModel, GameBindableModel>()
-               .ForMember(dest => dest.Name, act => act.MapFrom(src => src.Name))
                .ForMember(dest => dest.Game, act => act.MapFrom(src => src.Game))
                .ForMember(dest => dest.IsTest, act => act.MapFrom(src => src.IsTest))
                .ForMember(dest => dest.Star, act => act.MapFrom(src => src.Star))
                .ForMember(dest => dest.GameVariant, act => act.MapFrom(src => src.GameVariant))
+               .ForMember(dest => dest.IsBlocked, act => act.MapFrom(src => src.IsBlocked))
+               .ForMember(dest => dest.IsPassed, act => act.MapFrom(src => src.IsPassed))
                .ForMember(dest => dest.IsCurrent, act => act.MapFrom(src => src.IsCurrent))
                .ReverseMap();
             });

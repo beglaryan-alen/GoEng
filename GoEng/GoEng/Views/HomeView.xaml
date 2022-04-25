@@ -4,42 +4,75 @@
                        xmlns:views="clr-namespace:GoEng.Views"
                        xmlns:cells="clr-namespace:GoEng.Cells"
                        x:Name="homeView"
+                       xmlns:ffSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms" 
+                       xmlns:controls="clr-namespace:GoEng.Controls"
                        BackgroundColor="{StaticResource appcolor_i1}"
                        x:Class="GoEng.Views.HomeView">
 
     <Grid Padding="20" RowDefinitions="Auto, *">
+        <controls:CustomNavBar RightIconsVisible="True"
+                               ItemsSource="{Binding NavBarItems}"/>
 
-        <Image Grid.Row="0"
-               HorizontalOptions="Start"
-               Source="icon" />
-        
-        <ScrollView Grid.Row="1"
-                    Orientation="Vertical"
-                    VerticalScrollBarVisibility="Never">
+        <StackLayout Grid.Row="1">
 
-            <FlexLayout BindableLayout.ItemsSource="{Binding Collection}"
-                        Wrap="Wrap"
-                        JustifyContent="SpaceBetween">
+            <Frame BackgroundColor="DarkRed"
+                   HeightRequest="80"
+                   IsVisible="{Binding IsEmailVerified, Converter={StaticResource InvertedBoolConverter}}"
+                   CornerRadius="10">
 
-                <BindableLayout.ItemTemplate>
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Center">
 
-                    <DataTemplate>
+                    <Label Text="Please verify your email, click here to recheck."
+                           VerticalOptions="Center"
+                           TextColor="{StaticResource appcolor_i1}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding VerifyCommand}"/>
+                        </Label.GestureRecognizers>
+                    </Label>
 
-                        <Grid Padding="10"
-                              FlexLayout.Basis="{OnIdiom Phone='50%', Tablet='33%'}">
+                </StackLayout>
 
-                            <cells:HomeCell TapCommand="{Binding Source={x:Reference homeView}, Path=BindingContext.TapCommand}"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding VerifyEmailCommand}"/>
+                </Frame.GestureRecognizers>
+                
+            </Frame>
 
-                        </Grid>
+            <ScrollView Orientation="Vertical"
+                        VerticalScrollBarVisibility="Never">
 
-                    </DataTemplate>
+                <FlexLayout BindableLayout.ItemsSource="{Binding Collection}"
+                            Wrap="Wrap"
+                            JustifyContent="SpaceBetween">
 
-                </BindableLayout.ItemTemplate>
+                    <BindableLayout.ItemTemplate>
 
-            </FlexLayout>
+                        <DataTemplate>
 
-        </ScrollView>
-        
+                            <Grid Padding="15"
+                                  FlexLayout.Basis="{OnIdiom Phone='50%', Tablet='33%'}"
+                              >
+
+                                <cells:HomeCell TapCommand="{Binding Source={x:Reference homeView}, 
+                                    Path=BindingContext.TapCommand}"/>
+
+                            </Grid>
+
+                        </DataTemplate>
+
+                    </BindableLayout.ItemTemplate>
+
+                </FlexLayout>
+
+
+
+            </ScrollView>
+            
+        </StackLayout>
+
+
     </Grid>
 
 </views:BaseContentPage>

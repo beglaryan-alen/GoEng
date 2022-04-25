@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:views="clr-namespace:GoEng.Views"
+                       BackgroundColor="{StaticResource appcolor_i1}"
+                       xmlns:controls="clr-namespace:GoEng.Controls"
+                       xmlns:cells="clr-namespace:GoEng.Cells"
+                       x:Name="homeDetailsView"
+                       x:Class="GoEng.Views.Home.HomeDetailsView">
+
+    <Grid Padding="20" RowDefinitions="Auto, *">
+        <controls:HomeDetailsNavBar GoBackCommand="{Binding GoBackCommand}"
+                                    Title="{Binding Title}"
+                                    CurrentGameVariant="{Binding CurrentGameVariant}"
+                                    GameVariantsCount="{Binding GameVariantsCount}"/>
+
+        <StackLayout Grid.Row="1">
+
+            <ScrollView Orientation="Vertical"
+                        VerticalScrollBarVisibility="Never">
+
+                <FlexLayout BindableLayout.ItemsSource="{Binding Collection}"
+                            Wrap="Wrap"
+                            JustifyContent="SpaceBetween">
+
+                    <BindableLayout.ItemTemplate>
+
+                        <DataTemplate>
+
+                            <Grid Padding="15"
+                                  FlexLayout.Basis="{OnIdiom Phone='50%', Tablet='33%'}">
+
+                                <cells:HomeDetailsCell TapCommand="{Binding Source={x:Reference homeDetailsView}, 
+                                    Path=BindingContext.TapCommand}"/>
+
+                            </Grid>
+
+                        </DataTemplate>
+
+                    </BindableLayout.ItemTemplate>
+
+                </FlexLayout>
+
+
+
+            </ScrollView>
+
+        </StackLayout>
+
+
+    </Grid>
+
+</views:BaseContentPage>
