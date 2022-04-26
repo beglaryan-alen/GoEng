@@ -20,6 +20,9 @@ using GoEng.Views.Popups;
 using GoEng.Views.Popups.PagesPopup;
 using GoEng.Views.Profile;
 using GoEng.Views.RegisterDetails;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using MonkeyCache.SQLite;
 using Prism;
 using Prism.Ioc;
@@ -48,7 +51,7 @@ namespace GoEng
 
         private async void SetAppCenter()
         {
-            AppCenter.Start("android=d5c2ba03-71a6-46f5-8ce3-a06283f71839;" +
+            AppCenter.Start("android=key;" +
                   "uwp={Your UWP App secret here};" +
                   "ios={Your iOS App secret here};" +
                   "macos={Your macOS App secret here};",

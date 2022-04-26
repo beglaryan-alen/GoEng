@@ -9,7 +9,7 @@
 
         <controls:HomeDetailsNavBar />
 
-        <CarouselView
+        <!--<CarouselView
                 HorizontalOptions="Center"
                 HorizontalScrollBarVisibility="Never"
                 IsSwipeEnabled="False"
@@ -20,33 +20,10 @@
 
             <CarouselView.ItemTemplate>
 
-                <selectors:GameVariantTemplateSelector>
-
-                    <!--<selectors:SignInDetailTemplateSelector.RegisterTemplate>
-
-                        <DataTemplate>
-
-                            <signInDetails:RegisterTabView BindingContext="{Binding RegisterTabViewModel}" />
-
-                        </DataTemplate>
-
-                    </selectors:SignInDetailTemplateSelector.RegisterTemplate>
-
-                    <selectors:SignInDetailTemplateSelector.LogInTemplate>
-
-                        <DataTemplate>
-
-                            <signInDetails:LogInTabView BindingContext="{Binding LoginTabViewModel}" />
-
-                        </DataTemplate>
-
-                    </selectors:SignInDetailTemplateSelector.LogInTemplate>
-
-                </selectors:SignInDetailTemplateSelector>-->
 
             </CarouselView.ItemTemplate>
 
-        </CarouselView>
+        </CarouselView>-->
         
     </StackLayout>
 
